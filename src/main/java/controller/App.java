@@ -1,3 +1,6 @@
+/**
+ *
+ */
 package controller;
 
 import ij.plugin.DICOM;
@@ -13,8 +16,8 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
 /**
- * Hello world!
  *
+ * @author Arthur Henning
  */
 public class App 
 {
@@ -23,6 +26,11 @@ public class App
             = "images/";
     private static final String sourceFolder
             = "F:\\Projects\\MedicalImageFusion\\Dicom files\\";
+
+    /**
+     *
+     * @param args
+     */
     public static void main( String[] args )
     {
         //opening DICOM file
