@@ -16,9 +16,10 @@
 
 package model;
 
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.highgui.Highgui;
+import ij.ImagePlus;
+import ij.process.FloatProcessor;
+import ij.process.ImageProcessor;
+import java.awt.image.BufferedImage;
 
 /**
  *
@@ -26,12 +27,24 @@ import org.opencv.highgui.Highgui;
  */
 public class ImageProcessing {
 
-    public ImageProcessing() {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-    }
+    public ImagePlus wavelet1D(ImagePlus in) {
+        ImageProcessor p = in.getProcessor();
+        FloatProcessor processor = p.convertToFloatProcessor();
+        System.out.println(in.toString());
+        for (int i = 0; i < in.getHeight(); i++) {
+            for (int j = 0; j < in.getWidth(); j++) {
+                System.out.print(processor.getf(i, j) + " ");
+                processor.setf(i, j, 10.221f);
+            }
+            System.out.print("\n");
+        }
 
-    public boolean load(String imagePath) {
-        Mat mat = Highgui.imread(imagePath);
-        return !mat.empty();
+        for (int i = 0; i < in.getHeight(); i++) {
+            for (int j = 0; j < in.getWidth(); j++) {
+                System.out.print(processor.getf(i, j) + " ");
+            }
+            System.out.print("\n");
+        }
+        return null;
     }
 }
