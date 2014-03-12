@@ -16,8 +16,8 @@
 
 package model;
 
+import ij.ImagePlus;
 import ij.plugin.DICOM;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -46,8 +46,8 @@ public class DicomIO {
         return dicom.getWidth() != 0;
     }
 
-    public BufferedImage getImage() {
-        return dicom.getBufferedImage();
+    public ImagePlus getImage() {
+        return new ImagePlus(dicom.getShortTitle(), dicom.getImage());
     }
 
     public boolean saveImage() {

@@ -11,9 +11,6 @@ import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
 
 /**
  *
@@ -54,12 +51,5 @@ public class App
         System.out.println("Attempting to print dicom properties");
         writer.println(dcm.getProperties());
         writer.close();
-        
-        // opencv test
-        // first Run -> Set project configuration -> Customize -> Run ->
-        // VM Options -> -Djava.library.path="path-to-opencv-dll"
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        Mat mat = Mat.eye(3, 3, CvType.CV_8UC1);
-        System.out.println("mat = " + mat.dump());
     }
 }
