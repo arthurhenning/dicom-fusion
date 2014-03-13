@@ -17,6 +17,7 @@
 package model;
 
 import ij.ImagePlus;
+import ij.WindowManager;
 import ij.process.FloatProcessor;
 import ij.process.ImageProcessor;
 
@@ -24,9 +25,31 @@ import ij.process.ImageProcessor;
  *
  * @author Arthur Henning
  */
-public class ImageProcessing {
+public class DicomProcessor {
 
     public ImagePlus wavelet1D(ImagePlus in) {
+
+        for (int i = 0; i < in.getHeight(); i++) {
+            for (int j = 0; j < in.getWidth(); j++) {
+                in.getPixel(j, j);
+            }
+        }
+
+        return null;
+    }
+
+    public ImagePlus wavelet1DProcessor(ImagePlus in) {
+        ImageProcessor processor = in.getProcessor();
+
+//        processor.filter(ImageProcessor.FIND_EDGES);
+        processor.erode();
+
+        in.show();
+
+        return null;
+    }
+
+    public ImagePlus test(ImagePlus in) {
         ImageProcessor p = in.getProcessor();
         FloatProcessor processor = p.convertToFloatProcessor();
         System.out.println(in.toString());

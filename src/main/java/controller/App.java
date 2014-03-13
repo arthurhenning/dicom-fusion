@@ -32,7 +32,7 @@ public class App
     {
         //opening DICOM file
         DICOM dcm = new DICOM();
-        dcm.open(sourceFolder + "dicom.dcm");
+        dcm.open("F:\\Dicom\\1.dcm");
 
         //extract image data from DICOM file
         BufferedImage bf = dcm.getBufferedImage();

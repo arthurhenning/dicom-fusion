@@ -38,6 +38,7 @@ public class DicomIO {
     private String outputFolder;
 
     public DicomIO(String outputFolder) {
+        dicom = new DICOM();
         this.outputFolder = outputFolder;
     }
 

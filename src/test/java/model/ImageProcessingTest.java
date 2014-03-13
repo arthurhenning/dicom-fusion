@@ -45,13 +45,14 @@ public class ImageProcessingTest extends TestCase {
      */
     public void testWavelet1D() {
         System.out.println("wavelet1D");
-        ImagePlus in = new ImagePlus("inage", new BufferedImage(9, 9, BufferedImage.TYPE_USHORT_GRAY));
-        ImageProcessing instance = new ImageProcessing();
+//        ImagePlus in = new ImagePlus("inage", new BufferedImage(9, 9, BufferedImage.TYPE_USHORT_GRAY));
+        DicomIO io = new DicomIO("testOutput");
+        boolean ok = io.open("F:\\Dicom\\dicom.dcm");
+        ImagePlus in = io.getImage();
+        DicomProcessor instance = new DicomProcessor();
         ImagePlus expResult = null;
-        ImagePlus result = instance.wavelet1D(in);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ImagePlus result = instance.wavelet1DProcessor(in);
+        assert (true);
     }
 
 }
