@@ -51,7 +51,8 @@ public class ImageProcessingTest extends TestCase {
         ImagePlus in = io.getImage();
         DicomProcessor instance = new DicomProcessor();
         ImagePlus expResult = null;
-        ImagePlus result = instance.wavelet1DProcessor(in);
+        instance.haar2D(in, 2);
+        instance.inverseHaar2D(in, 2);
         assert (true);
     }
 
