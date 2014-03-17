@@ -17,6 +17,7 @@
 package model;
 
 import ij.ImagePlus;
+import ij.process.ImageProcessor;
 import java.awt.image.BufferedImage;
 import junit.framework.TestCase;
 
@@ -49,10 +50,12 @@ public class ImageProcessingTest extends TestCase {
         DicomIO io = new DicomIO("testOutput");
         boolean ok = io.open("F:\\Dicom\\dicom.dcm");
         ImagePlus in = io.getImage();
-        DicomProcessor instance = new DicomProcessor();
+        HaarDWT instance = new HaarDWT();
         ImagePlus expResult = null;
         instance.haar2D(in, 2);
+        in.show();
         instance.inverseHaar2D(in, 2);
+        in.show();
         assert (true);
     }
 
