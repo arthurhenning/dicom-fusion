@@ -17,17 +17,15 @@
 package model;
 
 import ij.ImagePlus;
-import ij.process.ImageProcessor;
-import java.awt.image.BufferedImage;
 import junit.framework.TestCase;
 
 /**
  *
  * @author Arthur Henning
  */
-public class ImageProcessingTest extends TestCase {
+public class LaplacianPyramidTest extends TestCase {
 
-    public ImageProcessingTest(String testName) {
+    public LaplacianPyramidTest(String testName) {
         super(testName);
     }
 
@@ -42,23 +40,15 @@ public class ImageProcessingTest extends TestCase {
     }
 
     /**
-     * Test of wavelet1D method, of class ImageProcessing.
+     * Test of calculatePyramid method, of class LaplacianPyramid.
      */
-    public void testWavelet1D() {
-        System.out.println("wavelet1D");
-//        ImagePlus in = new ImagePlus("inage", new BufferedImage(9, 9, BufferedImage.TYPE_USHORT_GRAY));
+    public void testCalculatePyramid() {
+        System.out.println("calculatePyramid");
         DicomIO io = new DicomIO("testOutput");
         boolean ok = io.open("F:\\Dicom\\dicom.dcm");
         ImagePlus in = io.getImage();
-        HaarDWT instance = new HaarDWT();
-        ImagePlus expResult = null;
-        ImagePlus original = new ImagePlus("original", in.getImage());
-        original.show();
-        instance.haar2D(in, 3);
-        in.show();
-        instance.inverseHaar2D(in, 3);
-        in.show();
-        assert (true);
+        LaplacianPyramid pyr = new LaplacianPyramid();
+        pyr.calculatePyramid(in, 4);
     }
 
 }
