@@ -20,6 +20,7 @@ import ij.ImagePlus;
 import ij.plugin.ImageCalculator;
 import ij.process.ImageProcessor;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,7 +39,7 @@ public class LaplacianPyramid {
 
     public void calcGaussianPyramid(ImagePlus in, int level) {
         gaussianPyramid.add(new ImagePlus("Gaussian 0", in.getImage()));
-        in.show();
+        //in.show();
         for (int i = 1; i < level; i++) {
             ImagePlus previous = gaussianPyramid.get(i - 1).duplicate();
             ImageProcessor iP = previous.getProcessor();
@@ -47,20 +48,43 @@ public class LaplacianPyramid {
             iP.blurGaussian(2);
             ImageProcessor iPResized = iP.resize(width / 2);
             ImagePlus next = new ImagePlus("Gaussian " + i, iPResized.getBufferedImage());
-            next.show();
+            //next.show();
             gaussianPyramid.add(next);
         }
     }
 
-    public void calcLaplacianPyr(ImagePlus in, int level) {
+    public void calcLaplacianPyramid(ImagePlus in, int level) {
+
+        // calculate Gaussian pyramid
         calcGaussianPyramid(in, level);
-        laplacianPyramid.add(level - 1, gaussianPyramid.get(level - 1).duplicate());
+
+        // add the same last image
+        ImagePlus last = gaussianPyramid.get(level - 1).duplicate();
+        last.setTitle("Laplacian " + (level - 1));
+        laplacianPyramid.add(last);
+
         for (int i = level - 1; i > 0; i--) {
-            ImagePlus current = gaussianPyramid.get(i - 1).duplicate();
-            ImageProcessor iP = current.getProcessor();
+            ImagePlus gaussian = gaussianPyramid.get(i).duplicate();
+            ImageProcessor processor = gaussian.getProcessor();
+
+            // size *= 2
+            ImageProcessor processorResized = processor.resize(gaussian.getWidth() * 2);
+            gaussian = new ImagePlus("GaussianResized " + i, processorResized);
+
+            // low pass filter
+            processorResized.blurGaussian(2);
+
+            //difference between current image and previous
+            ImagePlus current = gaussianPyramid.get(i - 1);
             ImageCalculator calculator = new ImageCalculator();
-            ImagePlus difference = calculator.run("Difference", current, gaussianPyramid.get(i));
-            // to do
+            ImagePlus difference = calculator.run("Subtract create", current, gaussian);
+            difference.setTitle("Laplacian " + (i - 1));
+
+            // store laplacian image
+            laplacianPyramid.add(difference);
         }
+
+        // reverse list for correct order
+        Collections.reverse(laplacianPyramid);
     }
 }
