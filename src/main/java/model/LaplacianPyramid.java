@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package model;
 
 import ij.ImagePlus;
@@ -24,8 +23,11 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * http://www.gazecom.eu/FILES/ludw08.pdf
+ * http://cs.haifa.ac.il/hagit/courses/ip/Lectures/Ip11_MultiscaleRepx4.pdf
+ * http://www.cns.nyu.edu/pub/lcv/adelson91.pdf
  *
- * @author Arthur Henning
+ * * @author Arthur Henning
  */
 public class LaplacianPyramid {
 
@@ -72,7 +74,7 @@ public class LaplacianPyramid {
             gaussian = new ImagePlus("GaussianResized " + i, processorResized);
 
             // low pass filter
-            processorResized.blurGaussian(2);
+            //processorResized.blurGaussian(2);
 
             //difference between current image and previous
             ImagePlus current = gaussianPyramid.get(i - 1);
@@ -86,5 +88,26 @@ public class LaplacianPyramid {
 
         // reverse list for correct order
         Collections.reverse(laplacianPyramid);
+    }
+
+    public void reconstrLaplacianPyramid(int level) {
+        ImagePlus image = laplacianPyramid.get(level - 1);
+        ImageProcessor processor = image.getProcessor();
+        int width = image.getWidth();
+        for (int i = level - 1; i > 0; i--) {
+            // size *= 2
+            width *= 2;
+            ImageProcessor processorResized = processor.resize(width);
+            ImagePlus imageResized = new ImagePlus("Temp", processorResized);
+
+            // low pass filter
+            //processorResized.blurGaussian(2);
+
+            // sum between current image and previous
+            ImagePlus previous = laplacianPyramid.get(i - 1);
+            ImageCalculator calculator = new ImageCalculator();
+            image = calculator.run("Add create", previous, imageResized);
+            image.show();
+        }
     }
 }

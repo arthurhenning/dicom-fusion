@@ -49,6 +49,8 @@ public class LaplacianPyramidTest extends TestCase {
         ImagePlus in = io.getImage();
         LaplacianPyramid pyr = new LaplacianPyramid();
         pyr.calcLaplacianPyramid(in, 4);
+        pyr.reconstrLaplacianPyramid(4);
+        in.show();
     }
 
 }
