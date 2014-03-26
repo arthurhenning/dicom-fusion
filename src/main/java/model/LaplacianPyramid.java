@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * Laplacian Pyramid method. Lossy algorithm in terms of image information.
  * http://www.gazecom.eu/FILES/ludw08.pdf
  * http://cs.haifa.ac.il/hagit/courses/ip/Lectures/Ip11_MultiscaleRepx4.pdf
  * http://www.cns.nyu.edu/pub/lcv/adelson91.pdf
@@ -33,6 +34,7 @@ public class LaplacianPyramid {
 
     private List<ImagePlus> laplacianPyramid;
     private List<ImagePlus> gaussianPyramid;
+    private static final double sigma = 3.0;
 
     public LaplacianPyramid() {
         laplacianPyramid = new ArrayList<ImagePlus>();
@@ -47,7 +49,7 @@ public class LaplacianPyramid {
             ImageProcessor iP = previous.getProcessor();
             int width = previous.getWidth();
 
-            iP.blurGaussian(2);
+            iP.blurGaussian(sigma);
             ImageProcessor iPResized = iP.resize(width / 2);
             ImagePlus next = new ImagePlus("Gaussian " + i, iPResized.getBufferedImage());
             //next.show();
@@ -70,11 +72,12 @@ public class LaplacianPyramid {
             ImageProcessor processor = gaussian.getProcessor();
 
             // size *= 2
+            processor.setInterpolationMethod(ImageProcessor.BICUBIC);
             ImageProcessor processorResized = processor.resize(gaussian.getWidth() * 2);
             gaussian = new ImagePlus("GaussianResized " + i, processorResized);
 
             // low pass filter
-            //processorResized.blurGaussian(2);
+            processorResized.blurGaussian(sigma);
 
             //difference between current image and previous
             ImagePlus current = gaussianPyramid.get(i - 1);
@@ -88,6 +91,11 @@ public class LaplacianPyramid {
 
         // reverse list for correct order
         Collections.reverse(laplacianPyramid);
+
+        // display
+        for (ImagePlus image : laplacianPyramid) {
+            image.show();
+        }
     }
 
     public void reconstrLaplacianPyramid(int level) {
@@ -95,13 +103,16 @@ public class LaplacianPyramid {
         ImageProcessor processor = image.getProcessor();
         int width = image.getWidth();
         for (int i = level - 1; i > 0; i--) {
+
             // size *= 2
             width *= 2;
+
+            processor.setInterpolationMethod(ImageProcessor.BICUBIC);
             ImageProcessor processorResized = processor.resize(width);
             ImagePlus imageResized = new ImagePlus("Temp", processorResized);
 
             // low pass filter
-            //processorResized.blurGaussian(2);
+            processorResized.blurGaussian(sigma);
 
             // sum between current image and previous
             ImagePlus previous = laplacianPyramid.get(i - 1);
