@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package model;
+package algorithm;
 
 import ij.ImagePlus;
 import ij.WindowManager;
@@ -27,6 +27,12 @@ import java.awt.Color;
  * @author Arthur Henning
  */
 public class HaarDWT {
+
+    private static int level;
+
+    public HaarDWT(int level) {
+        HaarDWT.level = level;
+    }
 
     /**
      * http://unix4lyfe.org/haar/
@@ -56,7 +62,7 @@ public class HaarDWT {
      * @param in
      * @param level
      */
-    public void haar2D(ImagePlus in, int level) {
+    public void haar2D(ImagePlus in) {
         ImageProcessor processor = in.getProcessor();
         float[][] data = processor.getFloatArray();
         int rows = in.getHeight();
@@ -111,7 +117,7 @@ public class HaarDWT {
         }
     }
 
-    public void inverseHaar2D(ImagePlus in, int level) {
+    public void inverseHaar2D(ImagePlus in) {
         ImageProcessor processor = in.getProcessor();
         float[][] data = processor.getFloatArray();
         int rows = in.getHeight();

@@ -16,6 +16,8 @@
 
 package model;
 
+import algorithm.DicomIO;
+import algorithm.LaplacianPyramid;
 import ij.ImagePlus;
 import junit.framework.TestCase;
 
@@ -47,9 +49,9 @@ public class LaplacianPyramidTest extends TestCase {
         DicomIO io = new DicomIO("testOutput");
         boolean ok = io.open("F:\\Dicom\\dicom.dcm");
         ImagePlus in = io.getImage();
-        LaplacianPyramid pyr = new LaplacianPyramid();
-        pyr.calcLaplacianPyramid(in, 4);
-        pyr.reconstrLaplacianPyramid(4);
+        LaplacianPyramid pyr = new LaplacianPyramid(4);
+        pyr.calcLaplacianPyramid(in);
+        in = pyr.reconstrLaplacianPyramid();
         in.show();
     }
 

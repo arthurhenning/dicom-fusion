@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package model;
+package algorithm;
 
 import ij.ImagePlus;
 import ij.plugin.ImageCalculator;
@@ -35,13 +35,15 @@ public class LaplacianPyramid {
     private List<ImagePlus> laplacianPyramid;
     private List<ImagePlus> gaussianPyramid;
     private static final double sigma = 3.0;
+    private final int level;
 
-    public LaplacianPyramid() {
+    public LaplacianPyramid(int level) {
+        this.level = level;
         laplacianPyramid = new ArrayList<ImagePlus>();
         gaussianPyramid = new ArrayList<ImagePlus>();
     }
 
-    public void calcGaussianPyramid(ImagePlus in, int level) {
+    public void calcGaussianPyramid(ImagePlus in) {
         gaussianPyramid.add(new ImagePlus("Gaussian 0", in.getImage()));
         //in.show();
         for (int i = 1; i < level; i++) {
@@ -57,10 +59,10 @@ public class LaplacianPyramid {
         }
     }
 
-    public void calcLaplacianPyramid(ImagePlus in, int level) {
+    public void calcLaplacianPyramid(ImagePlus in) {
 
         // calculate Gaussian pyramid
-        calcGaussianPyramid(in, level);
+        calcGaussianPyramid(in);
 
         // add the same last image
         ImagePlus last = gaussianPyramid.get(level - 1).duplicate();
@@ -98,7 +100,7 @@ public class LaplacianPyramid {
         }
     }
 
-    public void reconstrLaplacianPyramid(int level) {
+    public ImagePlus reconstrLaplacianPyramid() {
         ImagePlus image = laplacianPyramid.get(level - 1);
         ImageProcessor processor = image.getProcessor();
         int width = image.getWidth();
@@ -120,5 +122,23 @@ public class LaplacianPyramid {
             image = calculator.run("Add create", previous, imageResized);
             image.show();
         }
+        return image;
     }
+
+    public List<ImagePlus> getLaplacianPyramid() {
+        return laplacianPyramid;
+    }
+
+    public void setLaplacianPyramid(List<ImagePlus> laplacianPyramid) {
+        this.laplacianPyramid = laplacianPyramid;
+    }
+
+    public List<ImagePlus> getGaussianPyramid() {
+        return gaussianPyramid;
+    }
+
+    public void setGaussianPyramid(List<ImagePlus> gaussianPyramid) {
+        this.gaussianPyramid = gaussianPyramid;
+    }
+
 }

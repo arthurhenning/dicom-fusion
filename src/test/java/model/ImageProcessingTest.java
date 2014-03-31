@@ -16,6 +16,8 @@
 
 package model;
 
+import algorithm.DicomIO;
+import algorithm.HaarDWT;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
 import java.awt.image.BufferedImage;
@@ -50,13 +52,13 @@ public class ImageProcessingTest extends TestCase {
         DicomIO io = new DicomIO("testOutput");
         boolean ok = io.open("F:\\Dicom\\dicom.dcm");
         ImagePlus in = io.getImage();
-        HaarDWT instance = new HaarDWT();
+        HaarDWT instance = new HaarDWT(3);
         ImagePlus expResult = null;
         ImagePlus original = new ImagePlus("original", in.getImage());
         original.show();
-        instance.haar2D(in, 3);
+        instance.haar2D(in);
         in.show();
-        instance.inverseHaar2D(in, 3);
+        instance.inverseHaar2D(in);
         in.show();
         assert (true);
     }
