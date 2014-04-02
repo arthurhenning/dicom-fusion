@@ -1,4 +1,4 @@
-target
-images
+/target
+/images
 nb-configuration.xml
 nbactions-OpenCV-native.xml
