@@ -33,12 +33,12 @@ public class SimpleMaximumFusion implements FusionMethod {
 
         float[][] pixels1 = processor1.getFloatArray();
         float[][] pixels2 = processor2.getFloatArray();
-        float[][] result = new float[image1.getHeight()][image1.getWidth()];
+        float[][] result = new float[image1.getWidth()][image1.getHeight()];
 
         for (int i = 0; i < image1.getHeight(); i++) {
             for (int j = 0; j < image1.getWidth(); j++) {
-                result[i][j] = pixels1[i][j] > pixels2[i][j]
-                        ? pixels1[i][j] : pixels2[i][j];
+                result[j][i] = pixels1[j][i] > pixels2[j][i]
+                        ? pixels1[j][i] : pixels2[j][i];
             }
         }
 
