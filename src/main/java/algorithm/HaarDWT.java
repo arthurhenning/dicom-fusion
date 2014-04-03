@@ -80,22 +80,22 @@ public class HaarDWT {
             row = new float[levCols];
             for (int i = 0; i < levRows; i++) {
                 for (int j = 0; j < row.length; j++) {
-                    row[j] = data[i][j];
+                    row[j] = data[j][i];
                 }
                 haar1D(row);
                 for (int j = 0; j < row.length; j++) {
-                    data[i][j] = row[j];
+                    data[j][i] = row[j];
                 }
             }
 
             col = new float[levRows];
             for (int j = 0; j < levCols; j++) {
                 for (int i = 0; i < col.length; i++) {
-                    col[i] = data[i][j];
+                    col[i] = data[j][i];
                 }
                 haar1D(col);
                 for (int i = 0; i < col.length; i++) {
-                    data[i][j] = col[i];
+                    data[j][i] = col[i];
                 }
             }
         }
@@ -135,22 +135,22 @@ public class HaarDWT {
             row = new float[levCols];
             for (int i = 0; i < levRows; i++) {
                 for (int j = 0; j < row.length; j++) {
-                    row[j] = data[i][j];
+                    row[j] = data[j][i];
                 }
                 inverseHaar1D(row);
                 for (int j = 0; j < row.length; j++) {
-                    data[i][j] = row[j];
+                    data[j][i] = row[j];
                 }
             }
 
             col = new float[levRows];
             for (int j = 0; j < levCols; j++) {
                 for (int i = 0; i < col.length; i++) {
-                    col[i] = data[i][j];
+                    col[i] = data[j][i];
                 }
                 inverseHaar1D(col);
                 for (int i = 0; i < col.length; i++) {
-                    data[i][j] = col[i];
+                    data[j][i] = col[i];
                 }
             }
         }
