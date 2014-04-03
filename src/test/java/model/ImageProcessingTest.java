@@ -16,7 +16,6 @@
 
 package model;
 
-import algorithm.DicomIO;
 import algorithm.HaarDWT;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;

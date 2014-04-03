@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package algorithm;
+package model;
 
 import ij.ImagePlus;
 import ij.plugin.DICOM;

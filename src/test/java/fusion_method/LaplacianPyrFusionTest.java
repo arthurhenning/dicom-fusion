@@ -47,7 +47,7 @@ public class LaplacianPyrFusionTest extends TestCase {
         image1.show();
         ImagePlus image2 = new ImagePlus("F:\\test_images\\abdomen_2.jpg");
         image2.show();
-        LaplacianPyrFusion instance = null;
+        LaplacianPyrFusion instance = new LaplacianPyrFusion(4);
         ImagePlus expResult = null;
         ImagePlus result = instance.fuse(image1, image2);
         result.show();

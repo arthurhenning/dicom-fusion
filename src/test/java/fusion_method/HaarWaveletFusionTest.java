@@ -47,7 +47,7 @@ public class HaarWaveletFusionTest extends TestCase {
         image1.show();
         ImagePlus image2 = new ImagePlus("F:\\test_images\\abdomen_2.jpg");
         image2.show();
-        HaarWaveletFusion instance = null;
+        HaarWaveletFusion instance = new HaarWaveletFusion(4);
         ImagePlus expResult = null;
         ImagePlus result = instance.fuse(image1, image2);
         result.show();

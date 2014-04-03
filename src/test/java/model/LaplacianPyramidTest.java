@@ -16,7 +16,6 @@
 
 package model;
 
-import algorithm.DicomIO;
 import algorithm.LaplacianPyramid;
 import ij.ImagePlus;
 import junit.framework.TestCase;

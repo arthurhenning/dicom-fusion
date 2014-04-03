@@ -16,7 +16,6 @@
 
 package model;
 
-import algorithm.DicomIO;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.plugin.DICOM;
