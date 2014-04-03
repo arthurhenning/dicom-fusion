@@ -95,9 +95,9 @@ public class LaplacianPyramid {
         Collections.reverse(laplacianPyramid);
 
         // display
-        for (ImagePlus image : laplacianPyramid) {
-            image.show();
-        }
+//        for (ImagePlus image : laplacianPyramid) {
+//            image.show();
+//        }
     }
 
     public ImagePlus reconstrLaplacianPyramid() {
@@ -120,7 +120,6 @@ public class LaplacianPyramid {
             ImagePlus previous = laplacianPyramid.get(i - 1);
             ImageCalculator calculator = new ImageCalculator();
             image = calculator.run("Add create", previous, imageResized);
-            image.show();
         }
         return image;
     }
