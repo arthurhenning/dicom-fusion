@@ -39,27 +39,12 @@ public class HaarWaveletFusion implements FusionMethod {
         ImagePlus haarImage2 = image2.duplicate();
         haarDwt.haar2D(haarImage2);
 
-        // change with simple maximum //////////////////////////////////////////
-        ImageProcessor processor1 = haarImage1.getProcessor();
-        ImageProcessor processor2 = haarImage2.getProcessor();
+        SimpleMaximumFusion maximumFusion = new SimpleMaximumFusion();
+        ImagePlus result = maximumFusion.fuse(haarImage1, haarImage2);
 
-        float[][] pixels1 = processor1.getFloatArray();
-        float[][] pixels2 = processor2.getFloatArray();
-        float[][] result = new float[haarImage1.getHeight()][haarImage1.getWidth()];
+        haarDwt.inverseHaar2D(result);
 
-        for (int i = 0; i < haarImage1.getHeight(); i++) {
-            for (int j = 0; j < haarImage1.getWidth(); j++) {
-                result[i][j] = pixels1[i][j] > pixels2[i][j]
-                        ? pixels1[i][j] : pixels2[i][j];
-            }
-        }
-
-        processor1.setFloatArray(result);
-        ///////////////////////////////////////////////////////////////////////
-
-        haarDwt.inverseHaar2D(haarImage1);
-
-        return haarImage1;
+        return result;
     }
 
 }
