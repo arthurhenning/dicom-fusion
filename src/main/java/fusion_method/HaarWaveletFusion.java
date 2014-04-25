@@ -18,7 +18,6 @@ package fusion_method;
 
 import algorithm.HaarDWT;
 import ij.ImagePlus;
-import ij.process.ImageProcessor;
 
 /**
  *
@@ -27,22 +26,32 @@ import ij.process.ImageProcessor;
 public class HaarWaveletFusion implements FusionMethod {
 
     private final HaarDWT haarDwt;
+    private final FusionMethod simpleFusion;
 
-    public HaarWaveletFusion(int level) {
+    public HaarWaveletFusion(int level, FusionMethod simpleFusion) {
         haarDwt = new HaarDWT(level);
+        this.simpleFusion = simpleFusion;
     }
 
     public ImagePlus fuse(ImagePlus image1, ImagePlus image2) {
         ImagePlus haarImage1 = image1.duplicate();
         haarDwt.haar2D(haarImage1);
+        // debugging
+        haarImage1.show();
 
         ImagePlus haarImage2 = image2.duplicate();
         haarDwt.haar2D(haarImage2);
+        // debugging
+        haarImage2.show();
 
-        SimpleMaximumFusion maximumFusion = new SimpleMaximumFusion();
-        ImagePlus result = maximumFusion.fuse(haarImage1, haarImage2);
+        // Fusion method used to fuse the two haar images
+        ImagePlus result = simpleFusion.fuse(haarImage1, haarImage2);
+        // debugging
+        result.show();
 
         haarDwt.inverseHaar2D(result);
+        // debugging
+        result.show();
 
         return result;
     }

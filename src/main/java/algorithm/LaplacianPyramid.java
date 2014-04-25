@@ -34,11 +34,12 @@ public class LaplacianPyramid {
 
     private List<ImagePlus> laplacianPyramid;
     private List<ImagePlus> gaussianPyramid;
-    private static final double sigma = 3.0;
+    private final double sigma;
     private final int level;
 
-    public LaplacianPyramid(int level) {
+    public LaplacianPyramid(int level, double sigma) {
         this.level = level;
+        this.sigma = sigma;
         laplacianPyramid = new ArrayList<ImagePlus>();
         gaussianPyramid = new ArrayList<ImagePlus>();
     }
@@ -138,6 +139,14 @@ public class LaplacianPyramid {
 
     public void setGaussianPyramid(List<ImagePlus> gaussianPyramid) {
         this.gaussianPyramid = gaussianPyramid;
+    }
+
+    public double getSigma() {
+        return sigma;
+    }
+
+    public int getLevel() {
+        return level;
     }
 
 }

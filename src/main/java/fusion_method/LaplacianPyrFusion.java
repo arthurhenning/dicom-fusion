@@ -27,31 +27,36 @@ import java.util.List;
  */
 public class LaplacianPyrFusion implements FusionMethod {
 
-    private LaplacianPyramid pyramidCalc1;
-    private LaplacianPyramid pyramidCalc2;
+    private LaplacianPyramid pyramidCalculator;
+    private final int level;
+    private final double sigma;
+    private final FusionMethod simpleFusion;
 
-    public LaplacianPyrFusion(int level) {
-        pyramidCalc1 = new LaplacianPyramid(level);
-        pyramidCalc2 = new LaplacianPyramid(level);
+    public LaplacianPyrFusion(int level, double sigma, FusionMethod simpleFusion) {
+        this.level = level;
+        this.sigma = sigma;
+        this.simpleFusion = simpleFusion;
     }
 
     public ImagePlus fuse(ImagePlus image1, ImagePlus image2) {
-        pyramidCalc1.calcLaplacianPyramid(image1);
-        pyramidCalc2.calcLaplacianPyramid(image2);
 
-        List<ImagePlus> pyramid1 = pyramidCalc1.getLaplacianPyramid();
-        List<ImagePlus> pyramid2 = pyramidCalc2.getLaplacianPyramid();
+        pyramidCalculator = new LaplacianPyramid(level, sigma);
+        pyramidCalculator.calcLaplacianPyramid(image1);
+        List<ImagePlus> pyramid1 = pyramidCalculator.getLaplacianPyramid();
+
+        pyramidCalculator = new LaplacianPyramid(level, sigma);
+        pyramidCalculator.calcLaplacianPyramid(image2);
+        List<ImagePlus> pyramid2 = pyramidCalculator.getLaplacianPyramid();
+
         List<ImagePlus> result = new ArrayList<ImagePlus>(pyramid1.size());
 
-        SimpleMaximumFusion maximumFusion = new SimpleMaximumFusion();
-
         for (int i = 0; i < pyramid1.size(); i++) {
-            result.add(maximumFusion.fuse(pyramid1.get(i), pyramid2.get(i)));
+            result.add(simpleFusion.fuse(pyramid1.get(i), pyramid2.get(i)));
         }
 
-        pyramidCalc1.setLaplacianPyramid(result);
+        pyramidCalculator.setLaplacianPyramid(result);
 
-        return pyramidCalc1.reconstrLaplacianPyramid();
+        return pyramidCalculator.reconstrLaplacianPyramid();
     }
 
 }

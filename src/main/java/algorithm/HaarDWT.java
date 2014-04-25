@@ -28,6 +28,7 @@ import java.awt.Color;
  */
 public class HaarDWT {
 
+    private static final float t = 2.0f;
     private static int level;
 
     public HaarDWT(int level) {
@@ -48,8 +49,8 @@ public class HaarDWT {
         int h = data.length / 2;
         for (int i = 0; i < h; i++) {
             int k = i * 2;
-            temp[i] = (data[k] + data[k + 1]) / 2;
-            temp[i + h] = (data[k] - data[k + 1]) / 2;
+            temp[i] = (data[k] + data[k + 1]) / t;
+            temp[i + h] = (data[k] - data[k + 1]) / t;
         }
 
         for (int i = 0; i < data.length; i++) {

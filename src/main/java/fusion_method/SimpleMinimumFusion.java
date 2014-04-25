@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package fusion_method;
 
 import ij.ImagePlus;
@@ -23,7 +22,7 @@ import ij.process.ImageProcessor;
  *
  * @author Arthur Henning
  */
-public class SimpleMaximumFusion implements FusionMethod {
+public class SimpleMinimumFusion implements FusionMethod {
 
     public ImagePlus fuse(ImagePlus image1, ImagePlus image2) {
         ImagePlus image1Duplicate = image1.duplicate();
@@ -37,7 +36,7 @@ public class SimpleMaximumFusion implements FusionMethod {
 
         for (int i = 0; i < image1.getHeight(); i++) {
             for (int j = 0; j < image1.getWidth(); j++) {
-                result[j][i] = pixels1[j][i] > pixels2[j][i]
+                result[j][i] = pixels1[j][i] < pixels2[j][i]
                         ? pixels1[j][i] : pixels2[j][i];
             }
         }

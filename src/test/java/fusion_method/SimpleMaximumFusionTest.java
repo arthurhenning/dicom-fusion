@@ -43,9 +43,9 @@ public class SimpleMaximumFusionTest extends TestCase {
      */
     public void testFuse() {
         System.out.println("fuse");
-        ImagePlus image1 = new ImagePlus("F:\\test_images\\abdomen_1.jpg");
+        ImagePlus image1 = new ImagePlus("F:\\UTCN\\test_images\\mri_left_blurred.jpg");
         image1.show();
-        ImagePlus image2 = new ImagePlus("F:\\test_images\\abdomen_2.jpg");
+        ImagePlus image2 = new ImagePlus("F:\\UTCN\\test_images\\mri_right_blurred.jpg");
         image2.show();
         SimpleMaximumFusion instance = new SimpleMaximumFusion();
         ImagePlus expResult = null;

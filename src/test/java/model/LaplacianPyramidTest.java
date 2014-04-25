@@ -48,7 +48,7 @@ public class LaplacianPyramidTest extends TestCase {
         DicomIO io = new DicomIO("testOutput");
         boolean ok = io.open("F:\\Dicom\\dicom.dcm");
         ImagePlus in = io.getImage();
-        LaplacianPyramid pyr = new LaplacianPyramid(4);
+        LaplacianPyramid pyr = new LaplacianPyramid(4, 3.0);
         pyr.calcLaplacianPyramid(in);
         in = pyr.reconstrLaplacianPyramid();
         in.show();

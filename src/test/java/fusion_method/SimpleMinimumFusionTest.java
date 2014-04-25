@@ -23,9 +23,9 @@ import junit.framework.TestCase;
  *
  * @author Arthur Henning
  */
-public class SimpleAverageFusionTest extends TestCase {
+public class SimpleMinimumFusionTest extends TestCase {
 
-    public SimpleAverageFusionTest(String testName) {
+    public SimpleMinimumFusionTest(String testName) {
         super(testName);
     }
 
@@ -40,7 +40,7 @@ public class SimpleAverageFusionTest extends TestCase {
     }
 
     /**
-     * Test of fuse method, of class SimpleAverageFusion.
+     * Test of fuse method, of class SimpleMinimumFusion.
      */
     public void testFuse() {
         System.out.println("fuse");
@@ -48,7 +48,7 @@ public class SimpleAverageFusionTest extends TestCase {
         image1.show();
         ImagePlus image2 = new ImagePlus("F:\\UTCN\\test_images\\mri_right_blurred.jpg");
         image2.show();
-        SimpleAverageFusion instance = new SimpleAverageFusion();
+        SimpleMinimumFusion instance = new SimpleMinimumFusion();
         ImagePlus expResult = null;
         ImagePlus result = instance.fuse(image1, image2);
         result.show();
