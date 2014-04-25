@@ -16,6 +16,7 @@
 package fusion_method;
 
 import ij.ImagePlus;
+import image_processing.PostProcessor;
 import junit.framework.TestCase;
 
 /**
@@ -47,9 +48,12 @@ public class HaarWaveletFusionTest extends TestCase {
         image1.show();
         ImagePlus image2 = new ImagePlus("F:\\UTCN\\test_images\\mri_hard.jpg");
         image2.show();
-        HaarWaveletFusion instance = new HaarWaveletFusion(3, new SimpleMaximumFusion());
+        HaarWaveletFusion instance = new HaarWaveletFusion(4, new SimpleMaximumFusion());
         ImagePlus expResult = null;
         ImagePlus result = instance.fuse(image1, image2);
+        result.show();
+        PostProcessor pr = new PostProcessor();
+        pr.process(result, 0);
         result.show();
         assertEquals(expResult, result);
     }

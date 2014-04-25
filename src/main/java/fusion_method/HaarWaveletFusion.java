@@ -37,21 +37,21 @@ public class HaarWaveletFusion implements FusionMethod {
         ImagePlus haarImage1 = image1.duplicate();
         haarDwt.haar2D(haarImage1);
         // debugging
-        haarImage1.show();
+        //haarImage1.show();
 
         ImagePlus haarImage2 = image2.duplicate();
         haarDwt.haar2D(haarImage2);
         // debugging
-        haarImage2.show();
+        ///haarImage2.show();
 
         // Fusion method used to fuse the two haar images
         ImagePlus result = simpleFusion.fuse(haarImage1, haarImage2);
         // debugging
-        result.show();
+        //result.show();
 
         haarDwt.inverseHaar2D(result);
         // debugging
-        result.show();
+        //result.show();
 
         return result;
     }
