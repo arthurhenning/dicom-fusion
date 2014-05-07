@@ -37,12 +37,17 @@ public class DicomIO {
     private String imagePath;
     private String outputFolder;
 
+    public DicomIO() {
+        dicom = new DICOM();
+    }
+
     public DicomIO(String outputFolder) {
         dicom = new DICOM();
         this.outputFolder = outputFolder;
     }
 
     public boolean open(String path) {
+        System.out.println(path);
         dicom.open(path);
         return dicom.getWidth() != 0;
     }

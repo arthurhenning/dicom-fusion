@@ -16,10 +16,80 @@
 
 package controller;
 
+import fusion_method.FusionMethod;
+import fusion_method.HaarWaveletFusion;
+import fusion_method.LaplacianPyrFusion;
+import fusion_method.SimpleAverageFusion;
+import fusion_method.SimpleMaximumFusion;
+import fusion_method.SimpleMinimumFusion;
+import ij.ImagePlus;
+import model.DicomIO;
+
 /**
  *
  * @author Arthur Henning
  */
 public class MainController {
 
+    private static DicomIO dicomIO;
+    private static ImagePlus image1;
+    private static ImagePlus image2;
+    private static ImagePlus resultImage;
+
+    public static void init() {
+        dicomIO = new DicomIO();
+        image1 = null;
+        image2 = null;
+        resultImage = null;
+    }
+
+    public static boolean loadImage(String path, int imageNr) {
+
+        boolean ok = false;
+
+        if (dicomIO.open(path)) {
+            if (imageNr == 1) {
+                if (image1 != null) {
+                    image1.close();
+                }
+                image1 = dicomIO.getImage();
+                image1.show();
+                ok = true;
+            } else if (imageNr == 2) {
+                if (image2 != null) {
+                    image2.close();
+                }
+                image2 = dicomIO.getImage();
+                image2.show();
+                ok = true;
+            }
+        }
+
+        return true;
+    }
+
+    public static void fuse(int algorithmId) {
+        FusionMethod fusionMethod = null;
+        switch (algorithmId) {
+            case 0:
+                fusionMethod = new SimpleMinimumFusion();
+                break;
+            case 1:
+                fusionMethod = new SimpleAverageFusion();
+                break;
+            case 2:
+                fusionMethod = new SimpleMaximumFusion();
+                break;
+            case 3:
+                fusionMethod = new LaplacianPyrFusion(3, 3, new SimpleMaximumFusion());
+                break;
+            case 4:
+                fusionMethod = new HaarWaveletFusion(3, new SimpleMaximumFusion());
+                break;
+            default:
+                fusionMethod = new HaarWaveletFusion(3, new SimpleMaximumFusion());
+        }
+        resultImage = fusionMethod.fuse(image1, image2);
+        resultImage.show();
+    }
 }

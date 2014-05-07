@@ -28,8 +28,7 @@ public class App
      *
      * @param args
      */
-    public static void main( String[] args )
-    {
+    public void main() {
         //opening DICOM file
         DICOM dcm = new DICOM();
         dcm.open("F:\\Dicom\\1.dcm");
