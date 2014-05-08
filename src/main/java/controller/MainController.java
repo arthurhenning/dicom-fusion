@@ -23,6 +23,7 @@ import fusion_method.SimpleAverageFusion;
 import fusion_method.SimpleMaximumFusion;
 import fusion_method.SimpleMinimumFusion;
 import ij.ImagePlus;
+import image_processing.PostProcessor;
 import model.DicomIO;
 
 /**
@@ -65,10 +66,10 @@ public class MainController {
             }
         }
 
-        return true;
+        return ok;
     }
 
-    public static void fuse(int algorithmId) {
+    public static void fuse(int algorithmId, int postProcId) {
         FusionMethod fusionMethod = null;
         switch (algorithmId) {
             case 0:
@@ -90,6 +91,10 @@ public class MainController {
                 fusionMethod = new HaarWaveletFusion(3, new SimpleMaximumFusion());
         }
         resultImage = fusionMethod.fuse(image1, image2);
+        if (postProcId < 5) {
+            PostProcessor processor = new PostProcessor();
+            processor.process(resultImage, postProcId);
+        }
         resultImage.show();
     }
 }
