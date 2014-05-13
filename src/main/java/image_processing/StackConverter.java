@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package image_processing;
 
 import ij.ImagePlus;
@@ -25,11 +24,20 @@ import ij.plugin.ZProjector;
  */
 public class StackConverter {
 
+    /**
+     * Converts image stack to image doing a Z-plane projection of the slices.
+     *
+     * @param image ImagePlus, the image to convert containing the imagestack
+     * @return ImagePlus, single image file, the proection of the imagestack
+     */
     public ImagePlus convertToProjection(ImagePlus image) {
-        image.show();
-        ZProjector projector = new ZProjector(image);
-        projector.setMethod(ZProjector.AVG_METHOD);
-        projector.doProjection();
-        return projector.getProjection();
+        if (image.getStackSize() > 1) {
+            image.show();
+            ZProjector projector = new ZProjector(image);
+            projector.setMethod(ZProjector.MAX_METHOD);
+            projector.doProjection();
+            return projector.getProjection();
+        }
+        return image;
     }
 }
