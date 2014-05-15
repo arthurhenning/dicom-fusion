@@ -43,6 +43,8 @@ public class SimpleMinimumFusion implements FusionMethod {
 
         processor1.setFloatArray(result);
 
+        image1Duplicate.setTitle("Minimum: " + image1.getShortTitle() + " + " + image2.getShortTitle());
+
         return image1Duplicate;
     }
 }

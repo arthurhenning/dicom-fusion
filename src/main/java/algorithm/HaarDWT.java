@@ -157,4 +157,12 @@ public class HaarDWT {
         }
         processor.setFloatArray(data);
     }
+
+    public static int getLevel() {
+        return level;
+    }
+
+    public static void setLevel(int level) {
+        HaarDWT.level = level;
+    }
 }

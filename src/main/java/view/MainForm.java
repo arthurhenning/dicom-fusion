@@ -38,7 +38,7 @@ public class MainForm extends javax.swing.JFrame {
         initComponents();
         jButton1.setEnabled(false);
 
-        SpinnerNumberModel modelLevel = new SpinnerNumberModel(3.0, 1.0, 9.0, 1.0);
+        SpinnerNumberModel modelLevel = new SpinnerNumberModel(3, 1, 9, 1);
         jSpinner1.setModel(modelLevel);
         jLabel5.setVisible(false);
         jSpinner1.setVisible(false);
@@ -324,7 +324,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        MainController.fuse(jComboBox1.getSelectedIndex(), jComboBox2.getSelectedIndex());
+        MainController.fuse(jComboBox1.getSelectedIndex(), jComboBox2.getSelectedIndex(), (Integer) jSpinner1.getValue(), (Double) jSpinner2.getValue());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed

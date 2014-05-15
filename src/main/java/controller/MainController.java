@@ -69,8 +69,10 @@ public class MainController {
         return ok;
     }
 
-    public static void fuse(int algorithmId, int postProcId) {
+    public static void fuse(int algorithmId, int postProcId, int level, double sigma) {
+
         FusionMethod fusionMethod = null;
+
         switch (algorithmId) {
             case 0:
                 fusionMethod = new SimpleMinimumFusion();
@@ -82,15 +84,17 @@ public class MainController {
                 fusionMethod = new SimpleMaximumFusion();
                 break;
             case 3:
-                fusionMethod = new LaplacianPyrFusion(3, 3, new SimpleMaximumFusion());
+                fusionMethod = new LaplacianPyrFusion(level, sigma, new SimpleMaximumFusion());
                 break;
             case 4:
-                fusionMethod = new HaarWaveletFusion(3, new SimpleMaximumFusion());
+                fusionMethod = new HaarWaveletFusion(level, new SimpleMaximumFusion());
                 break;
             default:
-                fusionMethod = new HaarWaveletFusion(3, new SimpleMaximumFusion());
+                fusionMethod = new HaarWaveletFusion(level, new SimpleMaximumFusion());
         }
+
         resultImage = fusionMethod.fuse(image1, image2);
+
         if (postProcId < 5) {
             PostProcessor processor = new PostProcessor();
             processor.process(resultImage, postProcId);
