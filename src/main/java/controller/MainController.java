@@ -16,14 +16,8 @@
 
 package controller;
 
-import fusion_method.FusionMethod;
-import fusion_method.HaarWaveletFusion;
-import fusion_method.LaplacianPyrFusion;
-import fusion_method.SimpleAverageFusion;
-import fusion_method.SimpleMaximumFusion;
-import fusion_method.SimpleMinimumFusion;
 import ij.ImagePlus;
-import image_processing.PostProcessor;
+import image_processing.FusionFacade;
 import model.DicomIO;
 
 /**
@@ -36,12 +30,14 @@ public class MainController {
     private static ImagePlus image1;
     private static ImagePlus image2;
     private static ImagePlus resultImage;
+    private static FusionFacade fusionFacade;
 
     public static void init() {
         dicomIO = new DicomIO();
         image1 = null;
         image2 = null;
         resultImage = null;
+        fusionFacade = new FusionFacade();
     }
 
     public static boolean loadImage(String path, int imageNr) {
@@ -71,34 +67,8 @@ public class MainController {
 
     public static void fuse(int algorithmId, int postProcId, int level, double sigma) {
 
-        FusionMethod fusionMethod = null;
+        resultImage = fusionFacade.fuse(image1, image2, algorithmId, postProcId, level, sigma);
 
-        switch (algorithmId) {
-            case 0:
-                fusionMethod = new SimpleMinimumFusion();
-                break;
-            case 1:
-                fusionMethod = new SimpleAverageFusion();
-                break;
-            case 2:
-                fusionMethod = new SimpleMaximumFusion();
-                break;
-            case 3:
-                fusionMethod = new LaplacianPyrFusion(level, sigma, new SimpleMaximumFusion());
-                break;
-            case 4:
-                fusionMethod = new HaarWaveletFusion(level, new SimpleMaximumFusion());
-                break;
-            default:
-                fusionMethod = new HaarWaveletFusion(level, new SimpleMaximumFusion());
-        }
-
-        resultImage = fusionMethod.fuse(image1, image2);
-
-        if (postProcId < 5) {
-            PostProcessor processor = new PostProcessor();
-            processor.process(resultImage, postProcId);
-        }
         resultImage.show();
     }
 }

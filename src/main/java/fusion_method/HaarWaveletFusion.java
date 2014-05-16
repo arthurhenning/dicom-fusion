@@ -28,6 +28,11 @@ public class HaarWaveletFusion implements FusionMethod {
     private final HaarDWT haarDwt;
     private final FusionMethod simpleFusion;
 
+    public HaarWaveletFusion() {
+        haarDwt = new HaarDWT(3);
+        this.simpleFusion = new SimpleMaximumFusion();
+    }
+
     public HaarWaveletFusion(int level, FusionMethod simpleFusion) {
         haarDwt = new HaarDWT(level);
         this.simpleFusion = simpleFusion;

@@ -32,6 +32,12 @@ public class LaplacianPyrFusion implements FusionMethod {
     private final double sigma;
     private final FusionMethod simpleFusion;
 
+    public LaplacianPyrFusion() {
+        this.level = 3;
+        this.sigma = 3.0;
+        this.simpleFusion = new SimpleMaximumFusion();
+    }
+
     public LaplacianPyrFusion(int level, double sigma, FusionMethod simpleFusion) {
         this.level = level;
         this.sigma = sigma;

@@ -36,4 +36,10 @@ public class PeakSNR {
         double psnr = 10 * Math.log10(Math.pow(peak, 2) / mse);
         return psnr;
     }
+
+    public static double calculate(ImagePlus perfectImage, ImagePlus assessedImage, double mse) {
+        double peak = calculatePeak(assessedImage);
+        double psnr = 10 * Math.log10(Math.pow(peak, 2) / mse);
+        return psnr;
+    }
 }
