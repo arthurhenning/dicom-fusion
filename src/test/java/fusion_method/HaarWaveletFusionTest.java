@@ -17,6 +17,8 @@ package fusion_method;
 
 import ij.ImagePlus;
 import image_processing.PostProcessor;
+import java.io.File;
+import javax.swing.JFileChooser;
 import junit.framework.TestCase;
 
 /**
@@ -44,7 +46,8 @@ public class HaarWaveletFusionTest extends TestCase {
      */
     public void testFuse() {
         System.out.println("fuse");
-        ImagePlus image1 = new ImagePlus("F:\\UTCN\\test_images\\mri_soft.jpg");
+        // the relative path to the image
+        ImagePlus image1 = new ImagePlus("target/test-classes/mri.jpg");
         image1.show();
         ImagePlus image2 = new ImagePlus("F:\\UTCN\\test_images\\mri_hard.jpg");
         image2.show();

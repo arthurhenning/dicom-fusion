@@ -355,7 +355,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private boolean openDicom(int imageNr) {
 
-        JFileChooser fileChooser = new JFileChooser();
+        JFileChooser fileChooser = new JFileChooser("/");
         fileChooser.setFileFilter(new FileNameExtensionFilter("DICOM", "dcm"));
 
         int retVal = fileChooser.showOpenDialog(this);

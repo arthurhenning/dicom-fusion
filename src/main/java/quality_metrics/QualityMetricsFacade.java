@@ -49,6 +49,7 @@ public class QualityMetricsFacade {
         for (QualityMetricsInput input : inputImages) {
             for (FusionMethod method : fusionMethods) {
                 ImagePlus resultImage = method.fuse(image1, image2);
+                // TODO postprocess ?
                 double mse = MeanSquaredError.calculate(input.getPerfectImage(), resultImage);
                 double psnr = PeakSNR.calculate(resultImage, resultImage, mse);
                 // add to arrayList of outputs
