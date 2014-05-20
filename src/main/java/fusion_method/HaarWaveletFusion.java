@@ -58,7 +58,7 @@ public class HaarWaveletFusion implements FusionMethod {
         // debugging
         //result.show();
 
-        result.setTitle("Haar_" + HaarDWT.getLevel() + ": " + image1.getShortTitle() + " + " + image2.getShortTitle());
+        result.setTitle("Haar_" + HaarDWT.getLevel() + " " + image1.getShortTitle() + " + " + image2.getShortTitle());
 
         return result;
     }

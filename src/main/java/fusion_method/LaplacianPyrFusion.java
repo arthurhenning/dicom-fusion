@@ -64,7 +64,7 @@ public class LaplacianPyrFusion implements FusionMethod {
 
         ImagePlus resultImage = pyramidCalculator.reconstrLaplacianPyramid();
 
-        resultImage.setTitle("Laplacian_" + level + "_" + sigma + ": " + image1.getShortTitle() + " + " + image2.getShortTitle());
+        resultImage.setTitle("Laplacian_" + level + "_" + sigma + " " + image1.getShortTitle() + " + " + image2.getShortTitle());
 
         return resultImage;
     }

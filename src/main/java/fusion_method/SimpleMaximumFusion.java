@@ -44,7 +44,7 @@ public class SimpleMaximumFusion implements FusionMethod {
 
         processor1.setFloatArray(result);
 
-        image1Duplicate.setTitle("Maximum: " + image1.getShortTitle() + " + " + image2.getShortTitle());
+        image1Duplicate.setTitle("Maximum " + image1.getShortTitle() + " + " + image2.getShortTitle());
 
         return image1Duplicate;
     }

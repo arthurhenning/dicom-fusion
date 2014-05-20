@@ -61,4 +61,9 @@ public class QualityMetricsOutput {
         this.psnr = psnr;
     }
 
+    @Override
+    public String toString() {
+        return this.getResultImage().getTitle() + ";\t\tMSE: " + this.getMse()
+                + ";\t\tPSNR: " + this.getPsnr();
+    }
 }

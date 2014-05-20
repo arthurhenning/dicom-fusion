@@ -44,7 +44,7 @@ public class SimpleAverageFusion implements FusionMethod {
 
         processor1.setFloatArray(result);
 
-        image1Duplicate.setTitle("Average: " + image1.getShortTitle() + " + " + image2.getShortTitle());
+        image1Duplicate.setTitle("Average " + image1.getShortTitle() + " + " + image2.getShortTitle());
 
         return image1Duplicate;
     }
