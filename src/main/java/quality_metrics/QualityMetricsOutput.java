@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package quality_metrics;
 
 import ij.ImagePlus;
@@ -63,7 +62,7 @@ public class QualityMetricsOutput {
 
     @Override
     public String toString() {
-        return this.getResultImage().getTitle() + ";\t\tMSE: " + this.getMse()
-                + ";\t\tPSNR: " + this.getPsnr();
+        String formatted = String.format("%100s\tMSE:%.2f\t%.2f", this.getResultImage().getTitle(), this.getMse(), this.getPsnr());
+        return formatted;
     }
 }

@@ -1,4 +1,5 @@
 /target
 /images
+/quality_metrics
 nb-configuration.xml
 nbactions-OpenCV-native.xml

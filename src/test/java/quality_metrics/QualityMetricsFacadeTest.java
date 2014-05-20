@@ -115,15 +115,18 @@ public class QualityMetricsFacadeTest extends TestCase {
         instance.calculateQualityMetric();
 
         WritableWorkbook workbook = null;
+        File workbookFile = new File("quality_metrics/");
+        boolean ok = workbookFile.mkdirs();
         try {
-            workbook = Workbook.createWorkbook(new File("results.xls"));
+            workbook = Workbook.createWorkbook(new File("quality_metrics/results.xls"));
         } catch (IOException ex) {
             Logger.getLogger(QualityMetricsFacadeTest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         WritableSheet sheet;
 
-        PrintWriter pw = new PrintWriter(new FileOutputStream("results.txt"));
+        PrintWriter pw = new PrintWriter(new FileOutputStream("quality_metrics/results.txt"));
+
         int sheetIndex = 0;
         for (ArrayList<QualityMetricsOutput> outputArray : instance.getResults()) {
 
@@ -144,6 +147,7 @@ public class QualityMetricsFacadeTest extends TestCase {
                 }
                 index++;
             }
+            pw.println();
             sheetIndex++;
         }
 
