@@ -68,12 +68,14 @@ public class FusionFacade {
         // actual fusion
         ImagePlus resultImage = fusionMethod.fuse(image1, image2);
 
+        ImagePlus resultPostProc = resultImage;
+
         // postprocessing by id
         if (postProcId < 5) {
             PostProcessor processor = new PostProcessor();
-            processor.process(resultImage, postProcId);
+            resultPostProc = processor.process(resultImage, postProcId);
         }
 
-        return resultImage;
+        return resultPostProc;
     }
 }

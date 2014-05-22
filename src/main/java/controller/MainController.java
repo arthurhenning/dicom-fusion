@@ -18,7 +18,7 @@ package controller;
 
 import ij.ImagePlus;
 import image_processing.FusionFacade;
-import model.DicomIO;
+import io.DicomIO;
 
 /**
  *
