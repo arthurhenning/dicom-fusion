@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io;
 
 import ij.ImagePlus;
@@ -42,18 +41,25 @@ public class DicomIO {
     }
 
     public DicomIO(String outputFolder) {
-        dicom = new DICOM();
         this.outputFolder = outputFolder;
     }
 
     public boolean open(String path) {
+        dicom = new DICOM();
         System.out.println(path);
         dicom.open(path);
         return dicom.getWidth() != 0;
     }
 
     public ImagePlus getImage() {
-        return new ImagePlus(dicom.getShortTitle(), dicom.getImage());
+        ImagePlus returnImage = null;
+        if (dicom.getStackSize() > 1) {
+            returnImage = new ImagePlus(dicom.getShortTitle(), dicom.getImageStack());
+        } else {
+            returnImage = new ImagePlus(dicom.getShortTitle(), dicom.getImage());
+        }
+
+        return returnImage;
     }
 
     public boolean saveImage() {
