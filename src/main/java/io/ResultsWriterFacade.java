@@ -16,8 +16,11 @@
 
 package io;
 
+import exception.DicomFusionException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jxl.write.WriteException;
 import quality_metrics.QualityMetricsOutput;
 
@@ -50,11 +53,22 @@ public class ResultsWriterFacade {
         this.resultsWriters.add(writer);
     }
 
-    public void writeResults(ArrayList<ArrayList<QualityMetricsOutput>> results) throws IOException, WriteException {
+    public void addDefaultValues() {
+        this.addResultsWriter(new TextResultsWriter());
+        this.addResultsWriter(new ExcelResultsWriter());
+    }
+
+    public void writeResults(ArrayList<ArrayList<QualityMetricsOutput>> results) throws DicomFusionException {
         for (QMResultsWriter resultsWriter : resultsWriters) {
             resultsWriter.setOutputFolder(path);
             resultsWriter.setOutputFile(filename);
-            resultsWriter.write(results);
+            try {
+                resultsWriter.write(results);
+            } catch (IOException ex) {
+                throw new DicomFusionException(ex.getMessage());
+            } catch (WriteException ex) {
+                throw new DicomFusionException(ex.getMessage());
+            }
         }
     }
 

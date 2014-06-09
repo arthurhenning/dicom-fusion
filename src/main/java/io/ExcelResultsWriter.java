@@ -45,11 +45,7 @@ public class ExcelResultsWriter implements QMResultsWriter {
     public void write(ArrayList<ArrayList<QualityMetricsOutput>> results) throws IOException, WriteException {
 
         File workbookFile = new File(path);
-        boolean ok = workbookFile.mkdirs();
-
-        if (!ok) {
-            throw new IOException("Exception while creating directories.");
-        }
+        workbookFile.mkdirs();
 
         WritableWorkbook workbook = Workbook.createWorkbook(new File(this.path + "/" + this.filename + ".xls"));
 

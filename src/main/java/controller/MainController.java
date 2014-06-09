@@ -16,9 +16,14 @@
 
 package controller;
 
+import exception.DicomFusionException;
 import ij.ImagePlus;
 import image_processing.FusionFacade;
 import io.DicomIO;
+import io.ResultsWriterFacade;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import quality_metrics.QualityMetricsFacade;
 
 /**
  *
@@ -31,16 +36,21 @@ public class MainController {
     private static ImagePlus image2;
     private static ImagePlus resultImage;
     private static FusionFacade fusionFacade;
+    private static QualityMetricsFacade qualityMetricsFacade;
+    private static ResultsWriterFacade resultsWriterFacade;
 
     public static void init() {
-        dicomIO = new DicomIO();
         image1 = null;
         image2 = null;
         resultImage = null;
-        fusionFacade = new FusionFacade();
     }
 
     public static boolean loadImage(String path, int imageNr) {
+
+        // lazy loading
+        if (dicomIO == null) {
+            dicomIO = new DicomIO();
+        }
 
         boolean ok = false;
 
@@ -67,8 +77,44 @@ public class MainController {
 
     public static void fuse(int algorithmId, int postProcId, int level, double sigma) {
 
+        // lazy loading
+        if (fusionFacade == null) {
+            fusionFacade = new FusionFacade();
+        }
+
         resultImage = fusionFacade.fuse(image1, image2, algorithmId, postProcId, level, sigma);
 
         resultImage.show();
+    }
+
+    public static void runQualityMetrics() {
+
+        // lazy loading
+        if (qualityMetricsFacade == null) {
+            qualityMetricsFacade = new QualityMetricsFacade();
+
+            // add default values
+            qualityMetricsFacade.addDefaultValues();
+        }
+
+        // calculate the actual quality metrics values
+        qualityMetricsFacade.calculateQualityMetrics();
+
+        // lazy loading
+        if (resultsWriterFacade == null) {
+            resultsWriterFacade = new ResultsWriterFacade();
+
+            // add default values
+            resultsWriterFacade.addDefaultValues();
+        }
+
+        try {
+
+            // write results
+            resultsWriterFacade.writeResults(qualityMetricsFacade.getResults());
+        } catch (DicomFusionException ex) {
+            // show in popup
+            System.out.println(ex.getMessage());
+        }
     }
 }

@@ -112,7 +112,7 @@ public class QualityMetricsFacadeTest extends TestCase {
         instance.addFusionMethod(new HaarWaveletFusion(2, new SimpleMaximumFusion()));
         instance.addFusionMethod(new LaplacianPyrFusion());
 
-        instance.calculateQualityMetric();
+        instance.calculateQualityMetrics();
 
         WritableWorkbook workbook = null;
         File workbookFile = new File("quality_metrics/");

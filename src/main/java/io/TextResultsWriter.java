@@ -44,11 +44,7 @@ public class TextResultsWriter implements QMResultsWriter {
     public void write(ArrayList<ArrayList<QualityMetricsOutput>> results) throws IOException, WriteException {
 
         File workbookFile = new File(path);
-        boolean ok = workbookFile.mkdirs();
-
-        if (!ok) {
-            throw new IOException("Exception while creating directories.");
-        }
+        workbookFile.mkdirs();
 
         PrintWriter pw = new PrintWriter(new FileOutputStream(new File(this.path + "/" + this.filename + ".txt")));
 

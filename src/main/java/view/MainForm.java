@@ -196,6 +196,11 @@ public class MainForm extends javax.swing.JFrame {
         jLabel3.setText("Algorithm comparison");
 
         jButton2.setText("Run quality metrics");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -352,6 +357,11 @@ public class MainForm extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        MainController.runQualityMetrics();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private boolean openDicom(int imageNr) {
 

@@ -16,6 +16,11 @@
 package quality_metrics;
 
 import fusion_method.FusionMethod;
+import fusion_method.HaarWaveletFusion;
+import fusion_method.LaplacianPyrFusion;
+import fusion_method.SimpleAverageFusion;
+import fusion_method.SimpleMaximumFusion;
+import fusion_method.SimpleMinimumFusion;
 import ij.ImagePlus;
 import image_processing.PostProcessor;
 import java.util.ArrayList;
@@ -38,6 +43,31 @@ public class QualityMetricsFacade {
         results = new ArrayList<ArrayList<QualityMetricsOutput>>();
     }
 
+    public void addDefaultValues() {
+
+        ImagePlus perfectImage = new ImagePlus("target/test-classes/mri.jpg");
+        ImagePlus image1 = new ImagePlus("target/classes/mri_soft_2.jpg");
+        ImagePlus image2 = new ImagePlus("target/classes/mri_hard_2.jpg");
+
+        this.addInputImages(new QualityMetricsInput(perfectImage, image1, image2));
+
+        ImagePlus image1a = new ImagePlus("target/classes/mri_soft.jpg");
+        ImagePlus image2a = new ImagePlus("target/classes/mri_hard.jpg");
+
+        this.addInputImages(new QualityMetricsInput(perfectImage, image1a, image2a));
+
+        ImagePlus image1b = new ImagePlus("target/classes/mri_left_blurred.jpg");
+        ImagePlus image2b = new ImagePlus("target/classes/mri_right_blurred.jpg");
+
+        this.addInputImages(new QualityMetricsInput(perfectImage, image1b, image2b));
+
+        this.addFusionMethod(new SimpleAverageFusion());
+        this.addFusionMethod(new SimpleMinimumFusion());
+        this.addFusionMethod(new SimpleMaximumFusion());
+        this.addFusionMethod(new HaarWaveletFusion(2, new SimpleMaximumFusion()));
+        this.addFusionMethod(new LaplacianPyrFusion());
+    }
+
     public void addInputImages(QualityMetricsInput input) {
         inputImages.add(input);
     }
@@ -46,7 +76,7 @@ public class QualityMetricsFacade {
         fusionMethods.add(method);
     }
 
-    public void calculateQualityMetric() {
+    public void calculateQualityMetrics() {
 
         int index = 0;
         for (QualityMetricsInput input : inputImages) {
