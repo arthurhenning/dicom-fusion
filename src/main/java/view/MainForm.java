@@ -36,6 +36,7 @@ public class MainForm extends javax.swing.JFrame {
     public MainForm() {
         MainController.init();
         initComponents();
+        this.setTitle("Dicom Fusion");
         jButton1.setEnabled(false);
 
         SpinnerNumberModel modelLevel = new SpinnerNumberModel(3, 1, 9, 1);
