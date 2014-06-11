@@ -24,6 +24,7 @@ import io.ResultsWriterFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import quality_metrics.QualityMetricsFacade;
+import view.MessageDialog;
 
 /**
  *
@@ -113,8 +114,7 @@ public class MainController {
             // write results
             resultsWriterFacade.writeResults(qualityMetricsFacade.getResults());
         } catch (DicomFusionException ex) {
-            // show in popup
-            System.out.println(ex.getMessage());
+            MessageDialog.showMessage(ex.getMessage(), "error");
         }
     }
 }

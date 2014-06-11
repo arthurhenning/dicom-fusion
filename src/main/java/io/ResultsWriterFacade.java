@@ -59,17 +59,19 @@ public class ResultsWriterFacade {
     }
 
     public void writeResults(ArrayList<ArrayList<QualityMetricsOutput>> results) throws DicomFusionException {
-        for (QMResultsWriter resultsWriter : resultsWriters) {
-            resultsWriter.setOutputFolder(path);
-            resultsWriter.setOutputFile(filename);
-            try {
-                resultsWriter.write(results);
-            } catch (IOException ex) {
-                throw new DicomFusionException(ex.getMessage());
-            } catch (WriteException ex) {
-                throw new DicomFusionException(ex.getMessage());
-            }
-        }
+
+        throw new DicomFusionException("test");
+//        for (QMResultsWriter resultsWriter : resultsWriters) {
+//            resultsWriter.setOutputFolder(path);
+//            resultsWriter.setOutputFile(filename);
+//            try {
+//                resultsWriter.write(results);
+//            } catch (IOException ex) {
+//                throw new DicomFusionException(ex.getMessage());
+//            } catch (WriteException ex) {
+//                throw new DicomFusionException(ex.getMessage());
+//            }
+//        }
     }
 
 }
