@@ -33,6 +33,8 @@ public class MessageDialog {
             messageType = JOptionPane.WARNING_MESSAGE;
         } else if (type.toLowerCase().equals("error")) {
             messageType = JOptionPane.ERROR_MESSAGE;
+        } else if (type.toLowerCase().equals("info")) {
+            messageType = JOptionPane.INFORMATION_MESSAGE;
         }
 
         JOptionPane.showMessageDialog(new JFrame(type), message, type, messageType);

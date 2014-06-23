@@ -46,7 +46,6 @@ public class LaplacianPyramid {
 
     public void calcGaussianPyramid(ImagePlus in) {
         gaussianPyramid.add(new ImagePlus("Gaussian 0", in.getImage()));
-        //in.show();
         for (int i = 1; i < level; i++) {
             ImagePlus previous = gaussianPyramid.get(i - 1).duplicate();
             ImageProcessor iP = previous.getProcessor();
@@ -55,7 +54,6 @@ public class LaplacianPyramid {
             iP.blurGaussian(sigma);
             ImageProcessor iPResized = iP.resize(width / 2);
             ImagePlus next = new ImagePlus("Gaussian " + i, iPResized.getBufferedImage());
-            //next.show();
             gaussianPyramid.add(next);
         }
     }

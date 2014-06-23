@@ -20,7 +20,10 @@ import exception.DicomFusionException;
 import ij.ImagePlus;
 import image_processing.FusionFacade;
 import io.DicomIO;
+import io.ExcelResultsWriter;
+import io.ImageResultsWriter;
 import io.ResultsWriterFacade;
+import io.TextResultsWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import quality_metrics.QualityMetricsFacade;
@@ -83,12 +86,31 @@ public class MainController {
             fusionFacade = new FusionFacade();
         }
 
+        // start timer
+        long startMillis = System.currentTimeMillis();
+
+        image1.show();
+        image2.show();
         resultImage = fusionFacade.fuse(image1, image2, algorithmId, postProcId, level, sigma);
+
+        // stop timer
+        long endMillis = System.currentTimeMillis();
+
+        // calculate duration
+        long duration = endMillis - startMillis;
+
+        System.out.println("duration: " + duration);
+        resultImage.setTitle(resultImage.getTitle() + "_" + duration + "ms");
 
         resultImage.show();
     }
 
-    public static void runQualityMetrics() {
+    public static void runQualityMetrics(boolean textResults, boolean excelResults, boolean imageResults) {
+
+        if (!textResults && !excelResults && !imageResults) {
+            MessageDialog.showMessage("You must choose at least one results type!", "Warning");
+            return;
+        }
 
         // lazy loading
         if (qualityMetricsFacade == null) {
@@ -98,15 +120,35 @@ public class MainController {
             qualityMetricsFacade.addDefaultValues();
         }
 
+        // start timer
+        long startMillis = System.currentTimeMillis();
+
         // calculate the actual quality metrics values
         qualityMetricsFacade.calculateQualityMetrics();
+
+        // stop timer
+        long endMillis = System.currentTimeMillis();
+
+        // calculate duration
+        long duration = endMillis - startMillis;
+
+        System.out.println("duration: " + duration);
 
         // lazy loading
         if (resultsWriterFacade == null) {
             resultsWriterFacade = new ResultsWriterFacade();
 
             // add default values
-            resultsWriterFacade.addDefaultValues();
+            // resultsWriterFacade.addDefaultValues();
+            if (textResults) {
+                resultsWriterFacade.addResultsWriter(new TextResultsWriter());
+            }
+            if (excelResults) {
+                resultsWriterFacade.addResultsWriter(new ExcelResultsWriter());
+            }
+            if (imageResults) {
+                resultsWriterFacade.addResultsWriter(new ImageResultsWriter());
+            }
         }
 
         try {
@@ -116,5 +158,7 @@ public class MainController {
         } catch (DicomFusionException ex) {
             MessageDialog.showMessage(ex.getMessage(), "error");
         }
+        long endOperation = System.currentTimeMillis();
+        MessageDialog.showMessage("Quality metrics calculated in " + duration + "ms. \nOperation finished in " + (endOperation - startMillis) + " ms.", "Info");
     }
 }

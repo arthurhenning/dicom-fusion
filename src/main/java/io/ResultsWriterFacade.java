@@ -56,6 +56,7 @@ public class ResultsWriterFacade {
     public void addDefaultValues() {
         this.addResultsWriter(new TextResultsWriter());
         this.addResultsWriter(new ExcelResultsWriter());
+        this.addResultsWriter(new ImageResultsWriter());
     }
 
     public void writeResults(ArrayList<ArrayList<QualityMetricsOutput>> results) throws DicomFusionException {

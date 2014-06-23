@@ -39,25 +39,25 @@ public class PostProcessor {
         switch (option) {
             case PostProcessor.DILATE:
                 processor.dilate();
-                in.setTitle(inReal.getTitle() + ">dilated");
+                in.setTitle(inReal.getTitle() + "_dilated");
                 break;
             case PostProcessor.ERODE:
                 processor.erode();
-                in.setTitle(inReal.getTitle() + ">eroded");
+                in.setTitle(inReal.getTitle() + "_eroded");
                 break;
             case PostProcessor.SMOOTH:
                 processor.smooth();
-                in.setTitle(inReal.getTitle() + ">smoothed");
+                in.setTitle(inReal.getTitle() + "_smoothed");
                 break;
             case PostProcessor.DILATE_ERODE:
                 processor.dilate();
                 processor.erode();
-                in.setTitle(inReal.getTitle() + ">dilated_eroded");
+                in.setTitle(inReal.getTitle() + "_dilated_eroded");
                 break;
             case PostProcessor.DILATE_SMOOTH:
                 processor.dilate();
                 processor.smooth();
-                in.setTitle(inReal.getTitle() + ">dilated_smoothed");
+                in.setTitle(inReal.getTitle() + "_dilated_smoothed");
                 break;
             default:
                 in.setTitle(inReal.getTitle());
@@ -75,7 +75,7 @@ public class PostProcessor {
     public ImagePlus process(ImagePlus in) {
         ImageProcessor processor = in.getProcessor();
         processor.dilate();
-        in.setTitle(in.getTitle() + ">dilated");
+        in.setTitle(in.getTitle() + "_dilated");
         return in;
     }
 }
