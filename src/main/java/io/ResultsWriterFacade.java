@@ -53,6 +53,10 @@ public class ResultsWriterFacade {
         this.resultsWriters.add(writer);
     }
 
+    public void clearResultsWriters() {
+        this.resultsWriters.clear();
+    }
+
     public void addDefaultValues() {
         this.addResultsWriter(new TextResultsWriter());
         this.addResultsWriter(new ExcelResultsWriter());
@@ -63,13 +67,7 @@ public class ResultsWriterFacade {
         for (QMResultsWriter resultsWriter : resultsWriters) {
             resultsWriter.setOutputFolder(path);
             resultsWriter.setOutputFile(filename);
-            try {
-                resultsWriter.write(results);
-            } catch (IOException ex) {
-                throw new DicomFusionException(ex.getMessage());
-            } catch (WriteException ex) {
-                throw new DicomFusionException(ex.getMessage());
-            }
+            resultsWriter.write(results);
         }
     }
 

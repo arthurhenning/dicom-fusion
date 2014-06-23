@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package controller;
 
 import exception.DicomFusionException;
@@ -22,10 +21,14 @@ import image_processing.FusionFacade;
 import io.DicomIO;
 import io.ExcelResultsWriter;
 import io.ImageResultsWriter;
+import io.ImageSaver;
 import io.ResultsWriterFacade;
 import io.TextResultsWriter;
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import quality_metrics.QualityMetricsFacade;
 import view.MessageDialog;
 
@@ -137,18 +140,16 @@ public class MainController {
         // lazy loading
         if (resultsWriterFacade == null) {
             resultsWriterFacade = new ResultsWriterFacade();
+        }
 
-            // add default values
-            // resultsWriterFacade.addDefaultValues();
-            if (textResults) {
-                resultsWriterFacade.addResultsWriter(new TextResultsWriter());
-            }
-            if (excelResults) {
-                resultsWriterFacade.addResultsWriter(new ExcelResultsWriter());
-            }
-            if (imageResults) {
-                resultsWriterFacade.addResultsWriter(new ImageResultsWriter());
-            }
+        if (textResults) {
+            resultsWriterFacade.addResultsWriter(new TextResultsWriter());
+        }
+        if (excelResults) {
+            resultsWriterFacade.addResultsWriter(new ExcelResultsWriter());
+        }
+        if (imageResults) {
+            resultsWriterFacade.addResultsWriter(new ImageResultsWriter());
         }
 
         try {
@@ -157,8 +158,23 @@ public class MainController {
             resultsWriterFacade.writeResults(qualityMetricsFacade.getResults());
         } catch (DicomFusionException ex) {
             MessageDialog.showMessage(ex.getMessage(), "error");
+        } finally {
+            resultsWriterFacade.clearResultsWriters();
         }
         long endOperation = System.currentTimeMillis();
-        MessageDialog.showMessage("Quality metrics calculated in " + duration + "ms. \nOperation finished in " + (endOperation - startMillis) + " ms.", "Info");
+        MessageDialog.showMessage("Quality metrics calculated in " + duration + "ms."
+                + " \nOperation finished in " + (endOperation - startMillis) + " ms.", "Info");
+    }
+
+    public static void saveLastImage() {
+
+        String path = "fused_images";
+        try {
+            ImageSaver.save(resultImage, path);
+        } catch (DicomFusionException ex) {
+            MessageDialog.showMessage(ex.getMessage(), "Error");
+        }
+        MessageDialog.showMessage("Image successfully saved in \"" + path
+                + "\"\nas \"" + resultImage.getTitle() + ".jpg\".", "Info");
     }
 }

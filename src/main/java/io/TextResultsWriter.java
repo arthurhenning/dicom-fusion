@@ -16,11 +16,15 @@
 
 package io;
 
+import exception.DicomFusionException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jxl.write.WriteException;
 import quality_metrics.QualityMetricsOutput;
 
@@ -41,21 +45,25 @@ public class TextResultsWriter implements QMResultsWriter {
         this.filename = filename;
     }
 
-    public void write(ArrayList<ArrayList<QualityMetricsOutput>> results) throws IOException, WriteException {
+    public void write(ArrayList<ArrayList<QualityMetricsOutput>> results) throws DicomFusionException {
 
-        File workbookFile = new File(path);
-        workbookFile.mkdirs();
-
-        PrintWriter pw = new PrintWriter(new FileOutputStream(new File(this.path + "/" + this.filename + ".txt")));
-
-        for (ArrayList<QualityMetricsOutput> outputArray : results) {
-            for (QualityMetricsOutput output : outputArray) {
-                pw.println(output.toString());
+        PrintWriter pw = null;
+        try {
+            File workbookFile = new File(path);
+            workbookFile.mkdirs();
+            pw = new PrintWriter(new FileOutputStream(new File(this.path + "/" + this.filename + ".txt")));
+            for (ArrayList<QualityMetricsOutput> outputArray : results) {
+                for (QualityMetricsOutput output : outputArray) {
+                    pw.println(output.toString());
+                }
+                pw.println();
             }
-            pw.println();
+            pw.close();
+        } catch (FileNotFoundException ex) {
+            throw new DicomFusionException(ex.getMessage());
+        } finally {
+            pw.close();
         }
-
-        pw.close();
 
     }
 

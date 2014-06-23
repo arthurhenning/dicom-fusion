@@ -391,7 +391,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
+        MainController.saveLastImage();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -399,8 +399,13 @@ public class MainForm extends javax.swing.JFrame {
         boolean textResults = jCheckBox3.isSelected();
         boolean excelResults = jCheckBox4.isSelected();
         boolean imageResults = jCheckBox5.isSelected();
-
+        
         MainController.runQualityMetrics(textResults, excelResults, imageResults);
+
+        jCheckBox3.setSelected(false);
+        jCheckBox4.setSelected(false);
+        jCheckBox5.setSelected(false);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed

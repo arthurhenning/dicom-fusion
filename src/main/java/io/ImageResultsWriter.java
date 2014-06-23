@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io;
 
+import exception.DicomFusionException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,21 +42,14 @@ public class ImageResultsWriter implements QMResultsWriter {
         this.filename = filename;
     }
 
-    public void write(ArrayList<ArrayList<QualityMetricsOutput>> results) throws IOException, WriteException {
+    public void write(ArrayList<ArrayList<QualityMetricsOutput>> results) throws DicomFusionException {
         int i = 0;
         for (ArrayList<QualityMetricsOutput> list : results) {
             for (QualityMetricsOutput output : list) {
-                String imagePath = this.path + "/images" + "/" + i + "/" + output.getResultImage().getTitle() + ".jpg";
-                File outputfile = new File(imagePath);
-                outputfile.mkdirs();
-                try {
-                    ImageIO.write(output.getResultImage().getBufferedImage(), "jpg", outputfile);
-                } catch (IOException ex) {
-                    Logger.getLogger(DicomIO.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                String imagePath = this.path + "/images" + "/" + i;
+                ImageSaver.save(output.getResultImage(), imagePath);
             }
             i++;
         }
     }
-
 }

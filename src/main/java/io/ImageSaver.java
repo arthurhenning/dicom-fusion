@@ -17,20 +17,26 @@
 package io;
 
 import exception.DicomFusionException;
+import ij.ImagePlus;
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import jxl.write.WriteException;
-import quality_metrics.QualityMetricsOutput;
+import javax.imageio.ImageIO;
 
 /**
  *
  * @author Arthur Henning
  */
-public interface QMResultsWriter {
+public class ImageSaver {
 
-    public void setOutputFolder(String path);
+    public static void save(ImagePlus image, String path) throws DicomFusionException {
 
-    public void setOutputFile(String filename);
-
-    public void write(ArrayList<ArrayList<QualityMetricsOutput>> results) throws DicomFusionException;
+        String imagePath = path + "//" + image.getTitle() + ".jpg";
+        File outputfile = new File(imagePath);
+        outputfile.mkdirs();
+        try {
+            ImageIO.write(image.getBufferedImage(), "jpg", outputfile);
+        } catch (IOException ex) {
+            throw new DicomFusionException(ex.getMessage());
+        }
+    }
 }

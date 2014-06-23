@@ -15,9 +15,12 @@
  */
 package io;
 
+import exception.DicomFusionException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jxl.Workbook;
 import jxl.write.Label;
 import jxl.write.WritableSheet;
@@ -42,37 +45,43 @@ public class ExcelResultsWriter implements QMResultsWriter {
         this.filename = filename;
     }
 
-    public void write(ArrayList<ArrayList<QualityMetricsOutput>> results) throws IOException, WriteException {
+    public void write(ArrayList<ArrayList<QualityMetricsOutput>> results) throws DicomFusionException {
 
-        File workbookFile = new File(path);
-        workbookFile.mkdirs();
+        try {
+            File workbookFile = new File(path);
+            workbookFile.mkdirs();
 
-        WritableWorkbook workbook = Workbook.createWorkbook(new File(this.path + "/" + this.filename + ".xls"));
+            WritableWorkbook workbook = Workbook.createWorkbook(new File(this.path + "/" + this.filename + ".xls"));
 
-        int sheetIndex = 0;
-        for (ArrayList<QualityMetricsOutput> outputArray : results) {
+            int sheetIndex = 0;
+            for (ArrayList<QualityMetricsOutput> outputArray : results) {
 
-            // create new sheet for pair of input images
-            WritableSheet sheet = workbook.createSheet("Results " + sheetIndex, sheetIndex);
+                // create new sheet for pair of input images
+                WritableSheet sheet = workbook.createSheet("Results " + sheetIndex, sheetIndex);
 
-            int rowIndex = 0;
-            for (QualityMetricsOutput output : outputArray) {
+                int rowIndex = 0;
+                for (QualityMetricsOutput output : outputArray) {
 
-                Label label = new Label(0, rowIndex, output.getResultImage().getTitle());
-                jxl.write.Number mse = new jxl.write.Number(1, rowIndex, output.getMse());
-                jxl.write.Number psnr = new jxl.write.Number(2, rowIndex, output.getPsnr());
+                    Label label = new Label(0, rowIndex, output.getResultImage().getTitle());
+                    jxl.write.Number mse = new jxl.write.Number(1, rowIndex, output.getMse());
+                    jxl.write.Number psnr = new jxl.write.Number(2, rowIndex, output.getPsnr());
 
-                sheet.addCell(label);
-                sheet.addCell(mse);
-                sheet.addCell(psnr);
+                    sheet.addCell(label);
+                    sheet.addCell(mse);
+                    sheet.addCell(psnr);
 
-                rowIndex++;
+                    rowIndex++;
+                }
+                sheetIndex++;
             }
-            sheetIndex++;
-        }
 
-        workbook.write();
-        workbook.close();
+            workbook.write();
+            workbook.close();
+        } catch (IOException ex) {
+            throw new DicomFusionException(ex.getMessage());
+        } catch (WriteException ex) {
+            throw new DicomFusionException(ex.getMessage());
+        }
 
     }
 
