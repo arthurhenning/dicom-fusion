@@ -23,20 +23,38 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Laplacian Pyramid method. Lossy algorithm in terms of image information.
- * http://www.gazecom.eu/FILES/ludw08.pdf
- * http://cs.haifa.ac.il/hagit/courses/ip/Lectures/Ip11_MultiscaleRepx4.pdf
- * http://www.cns.nyu.edu/pub/lcv/adelson91.pdf
+ * Laplacian Pyramid algorithm. Lossy algorithm in terms of image information.
  *
  * * @author Arthur Henning
  */
 public class LaplacianPyramid {
 
+    /**
+     * The arrayList representing the Laplacian pyramid.
+     */
     private List<ImagePlus> laplacianPyramid;
+
+    /**
+     * The arrayList representing the Gaussian pyramid.
+     */
     private List<ImagePlus> gaussianPyramid;
+
+    /**
+     * Sigma used for Gaussian filter kernel size.
+     */
     private final double sigma;
+
+    /**
+     * Resolution level.
+     */
     private final int level;
 
+    /**
+     * Constructor.
+     *
+     * @param level {int}, the resolution level
+     * @param sigma {double}, the Gaussian filter kernel size.
+     */
     public LaplacianPyramid(int level, double sigma) {
         this.level = level;
         this.sigma = sigma;
@@ -44,6 +62,11 @@ public class LaplacianPyramid {
         gaussianPyramid = new ArrayList<ImagePlus>();
     }
 
+    /**
+     * Calculates the Gaussian pyramid.
+     *
+     * @param in {ImagePlus}, the image of which the pyramid will be calculated
+     */
     public void calcGaussianPyramid(ImagePlus in) {
         gaussianPyramid.add(new ImagePlus("Gaussian 0", in.getImage()));
         for (int i = 1; i < level; i++) {
@@ -58,6 +81,11 @@ public class LaplacianPyramid {
         }
     }
 
+    /**
+     * Calculates the Laplacian piramid, using the Gaussian pyramid.
+     *
+     * @param in {ImagePlus}, the image of which the pyramid will be calculated
+     */
     public void calcLaplacianPyramid(ImagePlus in) {
 
         // calculate Gaussian pyramid
@@ -92,13 +120,14 @@ public class LaplacianPyramid {
 
         // reverse list for correct order
         Collections.reverse(laplacianPyramid);
-
-        // display
-//        for (ImagePlus image : laplacianPyramid) {
-//            image.show();
-//        }
     }
 
+    /**
+     * Reconstruct image from Laplacian pyramid.Inverse Laplacian Pyramid
+     * transform.
+     *
+     * @return {ImagePlus}, the reconstructed image
+     */
     public ImagePlus reconstrLaplacianPyramid() {
         ImagePlus image = laplacianPyramid.get(level - 1);
         ImageProcessor processor = image.getProcessor();
@@ -123,26 +152,56 @@ public class LaplacianPyramid {
         return image;
     }
 
+    /**
+     * Gets the Laplacian Pyramid.
+     *
+     * @return {ArrayList<ImagePlus>}, the Laplacian pyramid
+     */
     public List<ImagePlus> getLaplacianPyramid() {
         return laplacianPyramid;
     }
 
+    /**
+     * Sets the Laplacian Pyramid.
+     *
+     * @param laplacianPyramid {ArrayList<ImagePlus>}, the Laplacian pyramid
+     */
     public void setLaplacianPyramid(List<ImagePlus> laplacianPyramid) {
         this.laplacianPyramid = laplacianPyramid;
     }
 
+    /**
+     * Gets the Gaussian Pyramid.
+     *
+     * @return {ArrayList<ImagePlus>}, the Gaussian pyramid
+     */
     public List<ImagePlus> getGaussianPyramid() {
         return gaussianPyramid;
     }
 
+    /**
+     * Sets the Gaussian Pyramid.
+     *
+     * @param gaussianPyramid {ArrayList<ImagePlus>}, the Gaussian pyramid
+     */
     public void setGaussianPyramid(List<ImagePlus> gaussianPyramid) {
         this.gaussianPyramid = gaussianPyramid;
     }
 
+    /**
+     * Gets the sigma.
+     *
+     * @return {double}, the sigma
+     */
     public double getSigma() {
         return sigma;
     }
 
+    /**
+     * Gets the resolution level.
+     *
+     * @return {int}, the level
+     */
     public int getLevel() {
         return level;
     }

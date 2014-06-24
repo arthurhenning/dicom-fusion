@@ -16,13 +16,7 @@
 package io;
 
 import exception.DicomFusionException;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import jxl.write.WriteException;
 import quality_metrics.QualityMetricsOutput;
 
 /**

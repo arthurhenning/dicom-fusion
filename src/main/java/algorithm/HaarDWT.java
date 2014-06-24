@@ -17,31 +17,38 @@
 package algorithm;
 
 import ij.ImagePlus;
-import ij.WindowManager;
-import ij.process.FloatProcessor;
 import ij.process.ImageProcessor;
-import java.awt.Color;
 
 /**
+ * Haar Discrete Wavelet Transform algorithm.
  *
  * @author Arthur Henning
  */
 public class HaarDWT {
 
+    /**
+     * The division factor.
+     */
     private static final float t = 2.0f;
+
+    /**
+     * The resolution level.
+     */
     private static int level;
 
+    /**
+     * Constructor.
+     *
+     * @param level {int}, the resolution level
+     */
     public HaarDWT(int level) {
         HaarDWT.level = level;
     }
 
     /**
-     * http://unix4lyfe.org/haar/
-     *http://www.codeproject.com/Articles/683663/Discrete-Haar-Wavelet-Transformation
+     * Calculates the 1D direct Haar transform.
      *
-     * @param in
-     * @param row
-     * @param width
+     * @param data {float[]}, the array to be transformed
      */
     public void haar1D(float[] data) {
         float[] temp = new float[data.length];
@@ -59,9 +66,9 @@ public class HaarDWT {
     }
 
     /**
+     * Calculates the 2D direct Haar transform.
      *
-     * @param in
-     * @param level
+     * @param in {ImagePlus}, the image to be transformed
      */
     public void haar2D(ImagePlus in) {
         ImageProcessor processor = in.getProcessor();
@@ -103,6 +110,11 @@ public class HaarDWT {
         processor.setFloatArray(data);
     }
 
+    /**
+     * Calculates the 1D inverse Haar transform.
+     *
+     * @param data {float[]}, the array to be transformed
+     */
     public void inverseHaar1D(float[] data) {
         float[] temp = new float[data.length];
 
@@ -118,6 +130,11 @@ public class HaarDWT {
         }
     }
 
+    /**
+     * Calculates the 2D inverse Haar transform.
+     *
+     * @param in {ImagePlus}, the image to be transformed
+     */
     public void inverseHaar2D(ImagePlus in) {
         ImageProcessor processor = in.getProcessor();
         float[][] data = processor.getFloatArray();
@@ -158,10 +175,20 @@ public class HaarDWT {
         processor.setFloatArray(data);
     }
 
+    /**
+     * Gets the resolution level.
+     *
+     * @return {int}, the level
+     */
     public static int getLevel() {
         return level;
     }
 
+    /**
+     * Sets the resolution level.
+     *
+     * @param level {int}, the level
+     */
     public static void setLevel(int level) {
         HaarDWT.level = level;
     }

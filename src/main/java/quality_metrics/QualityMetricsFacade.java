@@ -36,7 +36,6 @@ public class QualityMetricsFacade {
     private ArrayList<FusionMethod> fusionMethods;
     private PostProcessor postProcessor;
     private ArrayList<QualityMetricsInput> inputImages;
-    // TODO: arrayList<arrayList<>>
     private ArrayList<ArrayList<QualityMetricsOutput>> results;
 
     public QualityMetricsFacade() {
@@ -102,7 +101,6 @@ public class QualityMetricsFacade {
                 }
             }
             index++;
-            // TODO: save this set of results or create an average of all the sets
         }
     }
 

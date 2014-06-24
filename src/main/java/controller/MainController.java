@@ -24,15 +24,11 @@ import io.ImageResultsWriter;
 import io.ImageSaver;
 import io.ResultsWriterFacade;
 import io.TextResultsWriter;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import quality_metrics.QualityMetricsFacade;
 import view.MessageDialog;
 
 /**
+ * The Main controller of the application.
  *
  * @author Arthur Henning
  */

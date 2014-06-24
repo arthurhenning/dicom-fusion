@@ -17,9 +17,7 @@
 package io;
 
 import exception.DicomFusionException;
-import java.io.IOException;
 import java.util.ArrayList;
-import jxl.write.WriteException;
 import quality_metrics.QualityMetricsOutput;
 
 /**
