@@ -2,5 +2,6 @@
 /images
 /quality_metrics
 /fused_images
+nbactions.xml
 nb-configuration.xml
 nbactions-OpenCV-native.xml
