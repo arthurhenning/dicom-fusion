@@ -15,6 +15,7 @@
  */
 package quality_metrics;
 
+import exception.DicomFusionException;
 import fusion_method.FusionMethod;
 import fusion_method.HaarWaveletFusion;
 import fusion_method.LaplacianPyrFusion;
@@ -23,6 +24,7 @@ import fusion_method.SimpleMaximumFusion;
 import fusion_method.SimpleMinimumFusion;
 import ij.ImagePlus;
 import image_processing.PostProcessor;
+import io.ImageLoader;
 import java.util.ArrayList;
 
 /**
@@ -43,21 +45,22 @@ public class QualityMetricsFacade {
         results = new ArrayList<ArrayList<QualityMetricsOutput>>();
     }
 
-    public void addDefaultValues() {
+    public void addDefaultValues() throws DicomFusionException {
 
-        ImagePlus perfectImage = new ImagePlus("target/test-classes/mri.jpg");
-        ImagePlus image1 = new ImagePlus("target/classes/mri_soft_2.jpg");
-        ImagePlus image2 = new ImagePlus("target/classes/mri_hard_2.jpg");
+        ImageLoader imageLoader = new ImageLoader();
 
+        ImagePlus perfectImage = imageLoader.load("mri.jpg");
+        ImagePlus image1 = imageLoader.load("mri_soft2.jpg");
+        ImagePlus image2 = imageLoader.load("mri_hard2.jpg");
         this.addInputImages(new QualityMetricsInput(perfectImage, image1, image2));
 
-        ImagePlus image1a = new ImagePlus("target/classes/mri_soft.jpg");
-        ImagePlus image2a = new ImagePlus("target/classes/mri_hard.jpg");
+        ImagePlus image1a = imageLoader.load("mri_soft.jpg");
+        ImagePlus image2a = imageLoader.load("mri_hard.jpg");
 
         this.addInputImages(new QualityMetricsInput(perfectImage, image1a, image2a));
 
-        ImagePlus image1b = new ImagePlus("target/classes/mri_left_blurred.jpg");
-        ImagePlus image2b = new ImagePlus("target/classes/mri_right_blurred.jpg");
+        ImagePlus image1b = imageLoader.load("mri_left_blurred.jpg");
+        ImagePlus image2b = imageLoader.load("mri_right_blurred.jpg");
 
         this.addInputImages(new QualityMetricsInput(perfectImage, image1b, image2b));
 

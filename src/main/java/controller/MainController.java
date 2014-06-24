@@ -119,8 +119,12 @@ public class MainController {
         if (qualityMetricsFacade == null) {
             qualityMetricsFacade = new QualityMetricsFacade();
 
-            // add default values
-            qualityMetricsFacade.addDefaultValues();
+            try {
+                // add default values
+                qualityMetricsFacade.addDefaultValues();
+            } catch (DicomFusionException ex) {
+                MessageDialog.showMessage("Error loading images: " + ex.getMessage(), "Error");
+            }
         }
 
         // start timer
