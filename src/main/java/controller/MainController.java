@@ -177,4 +177,16 @@ public class MainController {
         MessageDialog.showMessage("Image successfully saved in \"" + path
                 + "\"\nas \"" + resultImage.getTitle() + ".jpg\".", "Info");
     }
+
+    public static void showAboutMessage() {
+        MessageDialog.showMessage("Steps to use the application's fusion process\n"
+                + "1. Load the DICOM files from the File/Open/Image 1 or Image 2 menu.\n"
+                + "2. Choose your preferred fusion method and its optional parameters.\n"
+                + "3. Choose your preferred postprocessing method or no postprocessing at all.\n"
+                + "4. Click the \"Fuse\" button to fuse the 2 images.\n"
+                + "5. You can save the displayed results with File/Save.\n"
+                + "If you want to compare all the algorithms and postprocessing methods, you can run the quality metrics process.\n"
+                + "For further questions/suggestions you can email me at h_arthur_12@yahoo.com.\n"
+                + "Henning Arthur", "Info");
+    }
 }
