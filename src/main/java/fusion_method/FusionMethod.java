@@ -19,7 +19,6 @@ package fusion_method;
 import ij.ImagePlus;
 
 /**
- * http://www.ijcaonline.org/volume9/number2/pxc3871832.pdf
  *
  * @author Arthur Henning
  */
